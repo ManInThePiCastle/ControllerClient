@@ -3,7 +3,7 @@ var ifaces = os.networkInterfaces();
 
 var iface = getInterfaces();
 
-var socket = require('socket.io-client')('http://localhost:8080');
+var socket = require('socket.io-client')('https://maninthepicastle.iwa.ecovate.com');
 socket.on('connect', function(){
   console.log('Connected to Controller Service');
   socket.emit('arm_connected', iface);
