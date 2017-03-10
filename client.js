@@ -4,7 +4,13 @@ var ifaces = os.networkInterfaces();
 
 var iface = getInterfaces();
 
-var socket = require('socket.io-client')('http://localhost', { query: "name=arm"} );
+if(process.env.NODE_ENV == "development") {
+  var socket_endpoint = "http://localhost"
+} else {
+  var socket_endpoint = "https://maninthepicastle.iwa.ecovate.com"
+}
+
+var socket = require('socket.io-client')(socket_endpoint, { query: "name=arm"} );
 socket.on('connect', function(){
   console.log('Connected to Controller Service');
   socket.emit('arm_connected', iface);
