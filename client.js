@@ -1,20 +1,42 @@
 var os = require('os');
+var http = require('http');
 var ifaces = os.networkInterfaces();
 
 var iface = getInterfaces();
 
-var socket = require('socket.io-client')('https://maninthepicastle.iwa.ecovate.com');
+var socket = require('socket.io-client')('http://localhost', { query: "name=arm"} );
 socket.on('connect', function(){
   console.log('Connected to Controller Service');
   socket.emit('arm_connected', iface);
-  socket.on('command', function(data){
-    console.log('Command Recieved: ' + data);
-  });
+});
+
+socket.on('command', function(data){
+  console.log('Command Recieved: ' + data);
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: data,
+    method: 'POST'
+  };
+
+  http.request(options, function(res) {
+    console.log('STATUS: ' + res.statusCode);
+    console.log('HEADERS: ' + JSON.stringify(res.headers));
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      console.log('BODY: ' + chunk);
+    });
+  }).end();  
 });
 
 socket.on('disconnect', function(){
-  socket.emit('arm_disconnected');
+  console.log('Disconnected from Controller Service');
 });
+
+
+
+
+
 
 function getInterfaces() {
 
