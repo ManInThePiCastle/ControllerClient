@@ -21,7 +21,7 @@ socket.on('command', function(data){
   var options = {
     host: 'localhost',
     port: 8080,
-    path: data,
+    path: '/v1'+data,
     method: 'POST'
   };
 
