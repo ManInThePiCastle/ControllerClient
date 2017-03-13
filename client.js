@@ -5,7 +5,7 @@ var ifaces = os.networkInterfaces();
 var iface = getInterfaces();
 
 if(process.env.NODE_ENV == "development") {
-  var socket_endpoint = "http://localhost"
+  var socket_endpoint = "http://localhost:31415"
 } else {
   var socket_endpoint = "https://maninthepicastle.iwa.ecovate.com"
 }
