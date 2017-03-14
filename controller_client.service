@@ -1,0 +1,9 @@
+[Unit]
+Description=ManInThePiCastle Controller Client Service
+
+[Service]
+ExecStart=/usr/local/lib/node_modules/forever/bin/forever /home/pi/ControllerClient/client.js >> /home/pi/ControllerClient.log
+Restart=Always
+
+[Install]
+WantedBy=multi-user.target
